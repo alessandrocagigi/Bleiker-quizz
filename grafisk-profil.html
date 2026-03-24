@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BleikerQuizzen | Grafisk profil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script defer src="js/main.js"></script>
+  </head>
+  <body data-page="profile">
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="logo" href="index.html" aria-label="BleikerQuizzen forside">
+          <span class="logo-mark">BQ</span>
+          <span class="logo-text">BleikerQuizzen</span>
+        </a>
+        <button class="menu-toggle" aria-label="Åpne meny" aria-expanded="false">Meny</button>
+        <ul class="nav-links">
+          <li><a href="grafisk-profil.html">Grafisk profil</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="video.html">Videoinnslag</a></li>
+          <li><a href="some-annonser.html">SoMe / annonser</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container page">
+      <h1>Grafisk profil</h1>
+      <p>Her ligger logo, farger, typografi og PDF.</p>
+
+      <section class="content-card">
+        <h2>Logo</h2>
+        <p>Legg JPG-filer i <code>assets/grafisk-profil</code>.</p>
+        <div class="media-grid">
+          <figure>
+            <img src="assets/grafisk-profil/logo-skisse.jpg" alt="Skisse av BleikerQuizzen-logo" />
+            <figcaption>Skisse (placeholder)</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/grafisk-profil/logo-ferdig.jpg" alt="Ferdig BleikerQuizzen-logo" />
+            <figcaption>Ferdig logo (placeholder)</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="content-card">
+        <h2>Fargepalett</h2>
+        <p>Fargene brukt i prosjektet.</p>
+        <div class="palette-grid">
+          <article class="palette-box p1">
+            <h3>Primar blå</h3>
+            <p>HEX: #1048a8</p>
+            <p>RGB: 16, 72, 168</p>
+            <p>CMYK: 90, 57, 0, 34</p>
+          </article>
+          <article class="palette-box p2">
+            <h3>Aksent gul</h3>
+            <p>HEX: #f2c335</p>
+            <p>RGB: 242, 195, 53</p>
+            <p>CMYK: 0, 19, 78, 5</p>
+          </article>
+          <article class="palette-box p3">
+            <h3>Mork bla</h3>
+            <p>HEX: #0f172a</p>
+            <p>RGB: 15, 23, 42</p>
+            <p>CMYK: 64, 45, 0, 84</p>
+          </article>
+          <article class="palette-box p4">
+            <h3>Lys bakgrunn</h3>
+            <p>HEX: #f8fafc</p>
+            <p>RGB: 248, 250, 252</p>
+            <p>CMYK: 2, 1, 0, 1</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-card">
+        <h2>Typografi</h2>
+        <p><strong>Logo/heading:</strong> Montserrat (700/800)</p>
+        <p><strong>Brodtekst:</strong> Inter (400/500)</p>
+        <img src="assets/grafisk-profil/typografi.jpg" alt="Typografioversikt" />
+      </section>
+
+      <section class="content-card">
+        <h2>Designmal (PDF)</h2>
+        <p>Legg PDF i <code>assets/grafisk-profil</code>.</p>
+        <a class="btn btn-primary" href="assets/grafisk-profil/designmal.pdf" download>Last ned designmal (PDF)</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p><strong>Laget av:</strong> Siri, Odd, Mira og Shaz</p>
+        <p><strong>Logo:</strong> BleikerQuizzen</p>
+        <p><strong>Kontakt:</strong> Elevtjenesten (Nina)</p>
+      </div>
+    </footer>
+  </body>
+</html>

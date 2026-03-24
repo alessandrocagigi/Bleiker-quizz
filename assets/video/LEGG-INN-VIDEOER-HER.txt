@@ -1,0 +1,6 @@
+Legg inn egne videofiler her:
+- avdelingsfilm.mp4
+- svar-a.mp4
+- svar-b.mp4
+- svar-c.mp4
+- quiz-sporsmal.mp4

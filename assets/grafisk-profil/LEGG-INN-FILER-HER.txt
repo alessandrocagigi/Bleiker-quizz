@@ -1,0 +1,5 @@
+Legg inn egne filer her:
+- logo-skisse.jpg
+- logo-ferdig.jpg
+- typografi.jpg
+- designmal.pdf

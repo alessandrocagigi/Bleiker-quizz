@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BleikerQuizzen | Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script defer src="js/main.js"></script>
+    <script defer src="js/quiz.js"></script>
+  </head>
+  <body data-page="quiz">
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="logo" href="index.html" aria-label="BleikerQuizzen forside">
+          <span class="logo-mark">BQ</span>
+          <span class="logo-text">BleikerQuizzen</span>
+        </a>
+        <button class="menu-toggle" aria-label="Åpne meny" aria-expanded="false">Meny</button>
+        <ul class="nav-links">
+          <li><a href="grafisk-profil.html">Grafisk profil</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="video.html">Videoinnslag</a></li>
+          <li><a href="some-annonser.html">SoMe / annonser</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container page">
+      <h1>BleikerQuizzen - Quiz</h1>
+      <p>Svar pa sporsmalene og sjekk topplista til slutt.</p>
+
+      <section id="quiz-intro" class="content-card">
+        <h2>Start quiz</h2>
+        <label for="player-name">Skriv navnet ditt:</label>
+        <input id="player-name" type="text" maxlength="24" placeholder="Eksempel: Nora" />
+        <button id="start-quiz" class="btn btn-primary">Start</button>
+      </section>
+
+      <section id="quiz-box" class="content-card hidden" aria-live="polite">
+        <div class="quiz-topline">
+          <p id="question-count"></p>
+          <p id="score-count"></p>
+        </div>
+        <h2 id="question-text"></h2>
+        <p id="question-category" class="badge"></p>
+        <div id="question-video-wrap" class="hidden">
+          <video id="question-video" controls preload="metadata">
+            <source src="assets/video/quiz-sporsmal.mp4" type="video/mp4" />
+            Nettleseren din stotter ikke video.
+          </video>
+        </div>
+        <div id="answer-buttons" class="answers"></div>
+        <p id="feedback-text" class="feedback"></p>
+        <button id="next-question" class="btn btn-secondary hidden">Neste sporsmal</button>
+      </section>
+
+      <section id="quiz-result" class="content-card hidden">
+        <h2>Ferdig!</h2>
+        <p id="result-text"></p>
+        <h3>Top 5 highscore</h3>
+        <ol id="highscore-list"></ol>
+        <button id="restart-quiz" class="btn btn-primary">Spill igjen</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p><strong>Laget av:</strong> Siri, Odd, Mira og Shaz</p>
+        <p><strong>Logo:</strong> BleikerQuizzen</p>
+        <p><strong>Kontakt:</strong> Elevtjenesten (Nina)</p>
+      </div>
+    </footer>
+  </body>
+</html>
