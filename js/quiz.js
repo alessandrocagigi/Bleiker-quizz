@@ -186,46 +186,55 @@ const questions = [
   },
 ];
 
-const HIGHSCORE_KEY = "bleikerquizzen_highscores";
+var HIGHSCORE_KEY = "bleikerquizzen_highscores";
 
-const introSection = document.querySelector("#quiz-intro");
-const quizBox = document.querySelector("#quiz-box");
-const resultSection = document.querySelector("#quiz-result");
-const playerNameInput = document.querySelector("#player-name");
-const startButton = document.querySelector("#start-quiz");
-const nextButton = document.querySelector("#next-question");
-const restartButton = document.querySelector("#restart-quiz");
-const questionCount = document.querySelector("#question-count");
-const scoreCount = document.querySelector("#score-count");
-const questionText = document.querySelector("#question-text");
-const questionCategory = document.querySelector("#question-category");
-const answersWrap = document.querySelector("#answer-buttons");
-const feedbackText = document.querySelector("#feedback-text");
-const resultText = document.querySelector("#result-text");
-const highscoreList = document.querySelector("#highscore-list");
-const questionVideoWrap = document.querySelector("#question-video-wrap");
-const questionVideo = document.querySelector("#question-video");
+var introSection = document.querySelector("#quiz-intro");
+var quizBox = document.querySelector("#quiz-box");
+var resultSection = document.querySelector("#quiz-result");
+var playerNameInput = document.querySelector("#player-name");
+var startButton = document.querySelector("#start-quiz");
+var nextButton = document.querySelector("#next-question");
+var restartButton = document.querySelector("#restart-quiz");
+var questionCount = document.querySelector("#question-count");
+var scoreCount = document.querySelector("#score-count");
+var questionText = document.querySelector("#question-text");
+var questionCategory = document.querySelector("#question-category");
+var answersWrap = document.querySelector("#answer-buttons");
+var feedbackText = document.querySelector("#feedback-text");
+var resultText = document.querySelector("#result-text");
+var highscoreList = document.querySelector("#highscore-list");
+var questionVideoWrap = document.querySelector("#question-video-wrap");
+var questionVideo = document.querySelector("#question-video");
 
-let playerName = "";
-let currentQuestionIndex = 0;
-let score = 0;
-let questionAnswered = false;
+var playerName = "";
+var currentQuestionIndex = 0;
+var score = 0;
+var questionAnswered = false;
+var activeQuestions = [];
 
 function shuffleQuestions() {
-  return [...questions].sort(() => Math.random() - 0.5);
+  var arr = [];
+  for (var i = 0; i < questions.length; i++) {
+    arr.push(questions[i]);
+  }
+  arr.sort(function () {
+    return Math.random() - 0.5;
+  });
+  return arr;
 }
 
-let activeQuestions = shuffleQuestions();
-
 function renderQuestion() {
-  const q = activeQuestions[currentQuestionIndex];
+  var q = activeQuestions[currentQuestionIndex];
   questionAnswered = false;
+
   feedbackText.textContent = "";
   feedbackText.className = "feedback";
   nextButton.classList.add("hidden");
+
   answersWrap.innerHTML = "";
-  questionCount.textContent = `Sporsmal ${currentQuestionIndex + 1} av ${activeQuestions.length}`;
-  scoreCount.textContent = `Poeng: ${score}`;
+
+  questionCount.textContent = "Sporsmal " + (currentQuestionIndex + 1) + " av " + activeQuestions.length;
+  scoreCount.textContent = "Poeng: " + score;
   questionText.textContent = q.question;
   questionCategory.textContent = q.category;
 
@@ -239,39 +248,47 @@ function renderQuestion() {
     questionVideoWrap.classList.add("hidden");
   }
 
-  q.options.forEach((option, optionIndex) => {
-    const button = document.createElement("button");
-    button.className = "answer-btn";
-    button.type = "button";
-    button.textContent = option;
-    button.addEventListener("click", () => handleAnswer(optionIndex));
-    answersWrap.appendChild(button);
-  });
+  for (var i = 0; i < q.options.length; i++) {
+    var optionText = q.options[i];
+
+    var btn = document.createElement("button");
+    btn.className = "answer-btn";
+    btn.type = "button";
+    btn.textContent = optionText;
+
+    (function (selectedIndex) {
+      btn.addEventListener("click", function () {
+        handleAnswer(selectedIndex);
+      });
+    })(i);
+
+    answersWrap.appendChild(btn);
+  }
 }
 
 function handleAnswer(selectedIndex) {
-  if (questionAnswered) {
-    return;
+  if (questionAnswered) return;
+  questionAnswered = true;
+
+  var q = activeQuestions[currentQuestionIndex];
+  var answerButtons = answersWrap.getElementsByClassName("answer-btn");
+
+  for (var i = 0; i < answerButtons.length; i++) {
+    answerButtons[i].disabled = true;
+    if (i === q.answer) {
+      answerButtons[i].classList.add("correct");
+    }
   }
 
-  questionAnswered = true;
-  const q = activeQuestions[currentQuestionIndex];
-  const answerButtons = Array.from(document.querySelectorAll(".answer-btn"));
-
-  answerButtons.forEach((button, idx) => {
-    button.disabled = true;
-    if (idx === q.answer) {
-      button.classList.add("correct");
-    }
-  });
-
   if (selectedIndex === q.answer) {
-    score += 1;
-    scoreCount.textContent = `Poeng: ${score}`;
+    score = score + 1;
+    scoreCount.textContent = "Poeng: " + score;
     feedbackText.textContent = "Riktig!";
     feedbackText.classList.add("correct");
   } else {
-    answerButtons[selectedIndex].classList.add("wrong");
+    if (answerButtons[selectedIndex]) {
+      answerButtons[selectedIndex].classList.add("wrong");
+    }
     feedbackText.textContent = "Feil. Riktig svar er markert.";
     feedbackText.classList.add("wrong");
   }
@@ -280,62 +297,85 @@ function handleAnswer(selectedIndex) {
 }
 
 function getHighscores() {
-  const raw = localStorage.getItem(HIGHSCORE_KEY);
-  return raw ? JSON.parse(raw) : [];
+  var raw = localStorage.getItem(HIGHSCORE_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return [];
+  }
 }
 
 function saveHighscore() {
-  const highscores = getHighscores();
+  var highscores = getHighscores();
+
   highscores.push({
     name: playerName,
-    score,
+    score: score,
     total: activeQuestions.length,
     percentage: Math.round((score / activeQuestions.length) * 100),
     date: new Date().toLocaleDateString("no-NO"),
   });
 
-  highscores.sort((a, b) => b.score - a.score || b.percentage - a.percentage);
-  const topFive = highscores.slice(0, 5);
+  highscores.sort(function (a, b) {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.percentage - a.percentage;
+  });
+
+  var topFive = highscores.slice(0, 5);
   localStorage.setItem(HIGHSCORE_KEY, JSON.stringify(topFive));
 }
 
 function renderHighscores() {
-  const highscores = getHighscores();
+  var highscores = getHighscores();
   highscoreList.innerHTML = "";
 
   if (highscores.length === 0) {
-    const li = document.createElement("li");
+    var li = document.createElement("li");
     li.textContent = "Ingen highscore enda.";
     highscoreList.appendChild(li);
     return;
   }
 
-  highscores.forEach((entry) => {
-    const li = document.createElement("li");
-    li.textContent = `${entry.name}: ${entry.score}/${entry.total} (${entry.percentage}%) - ${entry.date}`;
-    highscoreList.appendChild(li);
-  });
+  for (var i = 0; i < highscores.length; i++) {
+    var entry = highscores[i];
+    var li2 = document.createElement("li");
+    li2.textContent =
+      entry.name +
+      ": " +
+      entry.score +
+      "/" +
+      entry.total +
+      " (" +
+      entry.percentage +
+      "%) - " +
+      entry.date;
+    highscoreList.appendChild(li2);
+  }
 }
 
 function finishQuiz() {
   quizBox.classList.add("hidden");
   resultSection.classList.remove("hidden");
-  resultText.textContent = `${playerName}, du fikk ${score} av ${activeQuestions.length} poeng.`;
+
+  resultText.textContent = playerName + ", du fikk " + score + " av " + activeQuestions.length + " poeng.";
   saveHighscore();
   renderHighscores();
 }
 
 function goToNextQuestion() {
-  currentQuestionIndex += 1;
+  currentQuestionIndex = currentQuestionIndex + 1;
+
   if (currentQuestionIndex >= activeQuestions.length) {
     finishQuiz();
     return;
   }
+
   renderQuestion();
 }
 
 function startQuiz() {
-  const value = playerNameInput.value.trim();
+  var value = playerNameInput.value.trim();
   if (!value) {
     playerNameInput.focus();
     return;
@@ -344,10 +384,13 @@ function startQuiz() {
   playerName = value;
   currentQuestionIndex = 0;
   score = 0;
+
   activeQuestions = shuffleQuestions();
+
   introSection.classList.add("hidden");
   resultSection.classList.add("hidden");
   quizBox.classList.remove("hidden");
+
   renderQuestion();
 }
 

@@ -1,29 +1,38 @@
-const pageMap = {
-  home: "index.html",
-  profile: "grafisk-profil.html",
-  quiz: "quiz.html",
-  video: "video.html",
-  social: "some-annonser.html",
-};
+document.addEventListener("DOMContentLoaded", function () {
+  var page = document.body.getAttribute("data-page");
 
-const bodyPage = document.body.dataset.page;
-const navLinks = document.querySelectorAll(".nav-links a");
+  var links = document.querySelectorAll(".nav-links a");
+  for (var i = 0; i < links.length; i++) {
+    links[i].classList.remove("active");
+    links[i].removeAttribute("aria-current");
+  }
 
-if (bodyPage && pageMap[bodyPage]) {
-  navLinks.forEach((link) => {
-    if (link.getAttribute("href") === pageMap[bodyPage]) {
-      link.classList.add("active");
-      link.setAttribute("aria-current", "page");
+  var target = "";
+  if (page === "home") target = "index.html";
+  if (page === "profile") target = "grafisk-profil.html";
+  if (page === "quiz") target = "quiz.html";
+  if (page === "video") target = "video.html";
+  if (page === "social") target = "some-annonser.html";
+
+  for (var j = 0; j < links.length; j++) {
+    var href = links[j].getAttribute("href");
+    if (href === target) {
+      links[j].classList.add("active");
+      links[j].setAttribute("aria-current", "page");
     }
-  });
-}
+  }
 
-const menuToggle = document.querySelector(".menu-toggle");
-const menu = document.querySelector(".nav-links");
-
-if (menuToggle && menu) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = menu.classList.toggle("open");
-    menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
-}
+  var menuToggle = document.querySelector(".menu-toggle");
+  var menu = document.querySelector(".nav-links");
+  if (menuToggle && menu) {
+    menuToggle.addEventListener("click", function () {
+      if (menu.classList.contains("open")) {
+        menu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      } else {
+        menu.classList.add("open");
+        menuToggle.setAttribute("aria-expanded", "true");
+      }
+    });
+  }
+});

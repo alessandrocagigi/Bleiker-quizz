@@ -19,63 +19,71 @@ const cprQuestions = [
   },
 ];
 
-function createCprQuestionBlock(q, index) {
-  const wrap = document.createElement("article");
-  wrap.className = "cpr-question";
-
-  const badge = document.createElement("p");
-  badge.className = "badge";
-  badge.textContent = `Sporsmal ${index + 1}`;
-
-  const title = document.createElement("h3");
-  title.textContent = q.question;
-
-  const answers = document.createElement("div");
-  answers.className = "answers";
-
-  const feedback = document.createElement("p");
-  feedback.className = "feedback";
-
-  q.options.forEach((optionText, optionIndex) => {
-    const btn = document.createElement("button");
-    btn.className = "answer-btn";
-    btn.type = "button";
-    btn.textContent = optionText;
-    btn.addEventListener("click", () => {
-      const allButtons = Array.from(answers.querySelectorAll("button.answer-btn"));
-      allButtons.forEach((b, idx) => {
-        b.disabled = true;
-        if (idx === q.answer) b.classList.add("correct");
-      });
-
-      if (optionIndex === q.answer) {
-        feedback.textContent = "Riktig!";
-        feedback.classList.add("correct");
-      } else {
-        allButtons[optionIndex].classList.add("wrong");
-        feedback.textContent = "Feil. Riktig svar er markert.";
-        feedback.classList.add("wrong");
-      }
-    });
-
-    answers.appendChild(btn);
-  });
-
-  wrap.appendChild(badge);
-  wrap.appendChild(title);
-  wrap.appendChild(answers);
-  wrap.appendChild(feedback);
-
-  return wrap;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector("#cpr-questions");
+document.addEventListener("DOMContentLoaded", function () {
+  var container = document.querySelector("#cpr-questions");
   if (!container) return;
 
   container.innerHTML = "";
-  cprQuestions.forEach((q, index) => {
-    container.appendChild(createCprQuestionBlock(q, index));
-  });
+
+  for (var i = 0; i < cprQuestions.length; i++) {
+    var q = cprQuestions[i];
+
+    var wrap = document.createElement("article");
+    wrap.className = "cpr-question";
+
+    var badge = document.createElement("p");
+    badge.className = "badge";
+    badge.textContent = "Sporsmal " + (i + 1);
+    wrap.appendChild(badge);
+
+    var h = document.createElement("h3");
+    h.textContent = q.question;
+    wrap.appendChild(h);
+
+    var answers = document.createElement("div");
+    answers.className = "answers";
+    wrap.appendChild(answers);
+
+    var feedback = document.createElement("p");
+    feedback.className = "feedback";
+    wrap.appendChild(feedback);
+
+    for (var opt = 0; opt < q.options.length; opt++) {
+      var btn = document.createElement("button");
+      btn.className = "answer-btn";
+      btn.type = "button";
+      btn.textContent = q.options[opt];
+
+      (function (pickedIndex) {
+        btn.addEventListener("click", function () {
+          var all = answers.getElementsByClassName("answer-btn");
+
+          for (var k = 0; k < all.length; k++) {
+            all[k].disabled = true;
+            if (k === q.answer) {
+              all[k].classList.add("correct");
+            }
+          }
+
+          if (pickedIndex === q.answer) {
+            feedback.textContent = "Riktig!";
+            feedback.classList.remove("wrong");
+            feedback.classList.add("correct");
+          } else {
+            if (all[pickedIndex]) {
+              all[pickedIndex].classList.add("wrong");
+            }
+            feedback.textContent = "Feil. Riktig svar er markert.";
+            feedback.classList.remove("correct");
+            feedback.classList.add("wrong");
+          }
+        });
+      })(opt);
+
+      answers.appendChild(btn);
+    }
+
+    container.appendChild(wrap);
+  }
 });
 

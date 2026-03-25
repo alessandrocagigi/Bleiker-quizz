@@ -8,6 +8,8 @@
   --color-muted: #475569;
   --color-success: #15803d;
   --color-danger: #b91c1c;
+  --fontfamily: "Inter", Arial, sans-serif;
+  --headingfont: "Inter", Arial, sans-serif;
   --radius: 14px;
   --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
@@ -20,7 +22,7 @@
 
 body {
   margin: 0;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: var(--fontfamily);
   color: var(--color-text);
   background: var(--color-bg);
   line-height: 1.6;
@@ -29,7 +31,7 @@ body {
 h1,
 h2,
 h3 {
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: var(--headingfont);
   line-height: 1.25;
 }
 
@@ -77,12 +79,12 @@ a {
   border-radius: 12px;
   background: var(--color-primary);
   color: #fff;
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: var(--headingfont);
   font-weight: 800;
 }
 
 .logo-text {
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: var(--headingfont);
   font-weight: 700;
 }
 
@@ -367,3 +369,118 @@ input[type="text"] {
     display: flex;
   }
 }
+
+body {
+  background: #ffffff;
+}
+
+.container {
+  width: 95%;
+  margin: 0;
+}
+
+.site-header {
+  position: static;
+  border-bottom: 2px solid #ddd;
+}
+
+.navbar {
+  display: block;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.nav-links {
+  display: block;
+  margin: 10px 0 14px;
+  padding: 0;
+}
+
+.nav-links a {
+  display: block;
+  padding: 6px 0;
+  border-radius: 0;
+  font-weight: 400;
+}
+
+.nav-links a:hover {
+  background: transparent;
+  text-decoration: underline;
+  color: #0b3275;
+}
+
+.nav-links a.active {
+  background: transparent;
+  text-decoration: underline;
+  color: #0b3275;
+}
+
+.hero-grid {
+  display: block;
+}
+
+.hero-card,
+.feature-card,
+.content-card {
+  box-shadow: none;
+  border: 2px solid #e5e7eb;
+  border-radius: 0;
+  padding: 12px;
+  background: #f9fafb;
+}
+
+.hero-card {
+  border-top: 0;
+}
+
+.feature-section {
+  display: block;
+}
+
+.btn {
+  border-radius: 0;
+  border: 2px solid #0b3275;
+  background: #fff;
+  padding: 10px 12px;
+}
+
+.btn-primary {
+  background: #1048a8;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #0f172a;
+}
+
+.media-grid,
+.video-grid,
+.palette-grid {
+  display: block;
+}
+
+img,
+video {
+  border-radius: 0;
+  border: 1px solid #d1d5db;
+}
+
+.answers {
+  display: block;
+}
+
+.answer-btn {
+  width: 100%;
+  margin: 8px 0;
+  border-radius: 0;
+}
+
+.quiz-topline {
+  display: block;
+}
+
+
+
