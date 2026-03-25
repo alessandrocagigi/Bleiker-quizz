@@ -1,4 +1,4 @@
-Legg inn egne videofiler her:
+Legg inn egne videofiler her:c:\Users\Alessandroc\Downloads\quiz video.mp4
 - avdelingsfilm.mp4
 - svar-a.mp4
 - svar-b.mp4
