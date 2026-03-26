@@ -177,13 +177,6 @@ const questions = [
     ],
     answer: 1,
   },
-  {
-    category: "Videospørsmål",
-    question: "Se videoen og velg riktig alternativ basert pa demonstrasjonen.",
-    options: ["Alternativ A", "Alternativ B", "Alternativ C", "Alternativ D"],
-    answer: 2,
-    hasVideo: true,
-  },
 ];
 
 var HIGHSCORE_KEY = "bleikerquizzen_highscores";
